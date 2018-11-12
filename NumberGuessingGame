@@ -1,0 +1,59 @@
+"""
+Python Web Development Techdegree
+Project 1 - Number Guessing Game
+Author - linus
+-------------------------------
+"""
+
+import random
+
+
+def start_game():
+   
+    print("""
+    Welcome to Number Guessing Game,The instructions is as follows;
+    Pick a number in the range(1-10), and the computer will let you know if you guessed right or Not.
+    Good LUCK!!
+    """)
+    
+    luckyNumber = random.randint(1,10)
+    pastScores = []
+    
+    playerTries = 1
+    while True:
+      guess = input(" Please pick a number between(1-10) ")
+        
+      try:
+          guess = int(guess)
+      except ValueError as err:
+          print("Sorry we ran into an issue {}. please try again".format(err))
+          luckyNumber = random.randint(1,10)
+          playerTries = 0
+          continue
+      else:    
+          if guess > 10  or guess < 1:
+            print("that is not within the range of the game, try number between (1-10)")
+          elif guess > luckyNumber:
+            print(" Try lower ")
+          elif guess < luckyNumber:
+            print("Try higher ") 
+          elif guess == luckyNumber:
+            print("Got it ")
+            print("you had {} attempts \n".format(playerTries))
+            pastScores.append(playerTries)
+            tryagain = input("Would you like to play again? enter y/n for Yes/No ")
+            tryagain = tryagain.lower()
+            
+            if tryagain == 'y':
+              print("the current best attempts is {}".format(min(pastScores)))
+              luckyNumber = random.randint(1,10)
+              playerTries = 0
+            
+            elif tryagain == 'n':
+              break
+          playerTries += 1          
+
+if __name__ == '__main__':
+  
+    start_game()
+    print("Thanks for playing, Game Over!!")
